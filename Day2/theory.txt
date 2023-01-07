@@ -1,0 +1,184 @@
+Chapter-02: Igniting our App
+
+● React.createElement takes three arguments. The first it html tag that you want to create. The second one is attribute(props) and last one is children.
+
+● Bundlers: vite, parcel, webpack, rollup, broswerfy. Create-react-app uses webpack
+
+● Package manager: npm, yarn. Initialize package manager with npm --init. Why npm? - We need a lot of packages in React as it cannot be just built with react package.
+● Package.json: Configuration npm needs
+● We donot want parcel to be on production. So we install it as dev dependency.
+● Caret(^) automatically updates minor and patch version. Tilde(~) updates patch version. If nothing specified, exact version will be used.
+●  Why package-lock.json? Suppose we have parcel:"^2.8.2" in our package.json. If the version upgrades, our project will  upgrade but we donot know exact version to use in production. 
+So, to know exact version of package to use in production, we use package-lock.json.  Package-lock.json locks the version by telling exact version our project depends on.
+We should never keep it in .gitignore.    
+● Parcel uses a lot of packages to optimize our app. Browserlist help us to make our app compatible for older versions of browser.
+● Never put node_modules into git repository. Our package.json and package-lock.json have a lot of information to recreate node_modueles.
+● Using <script> to import react is not a good way. Good way is used to use packages. If package is updated, we need to keep on changing script tag time and again.
+It is always faster to load from our own server than to load from another CDN.
+● npx- execute using npm.
+● npx parcel index.html(entry point) to start using parcel (create development build) Use npx parcel build index.html for production build.
+● <script type="module"> When HTML parses and encounters script tag. It tries to load and execute. But it finds out that the JS file has import tags. Normal browser
+doesnot understand import. So, we tell that the file is not normal JS file but it is a module.
+● Hot Module Replacement(HMR): Parcel keeps track of all the updates and updates are automatically reflected. HMR works by using file watcher algorithm.
+
+● Parcel
+* HMR - Hot Module Replacement
+* File Watcher Algorithm - C++
+* Bundling
+* Minify
+* Dev and Production Build
+* Super fast build algorithms
+* Image Optimization
+* Caching while development
+* Compression
+* Compatible with older version of browser
+* Enable HTTPS on dev
+* Port number
+* Consistent Hashing Algorithm (to cache)
+* Zero config
+* Transitive dependencies
+(
+    - Parcel uses parcel cache to do all caching
+    - dist folder has minified code
+    - When  using parcel we donot need main entry point into our package.json 
+    - We need to put parcel-cache in .gitignore 
+    - Parcel automatically gives browser list for browser compatibility
+)
+
+● Transitive dependencies: One package depends on another and another package also depends on other. 
+Package manager takes care of transitive dependency. When we need to build production ready app, we need a lot of packages. Those 
+dependencies will also have more dependencies.
+
+# Theory Assignment:
+● - What is `NPM`?
+It is a open source package manager for your project. It is world's largest software registry. It has 3 components.
+a) website - One can search for packages
+b) CLI - It runs from terminal
+c) registry - It is large public database of JS software.
+
+● - What is `Parcel/Webpack`? Why do we need it?
+Parcel/Webpack are the bundlers that are needed to clean, minify, compress, etc our code so that our project is ready for production
+deployment. They take our code, bundle it into smaller, peformance efficient files in minified form. It helps reduce latency of code execution 
+and also optimize our app for web.
+Difference
+Parcel doesnot need any external configuration file but webpack requires a separate config file to specify plugins, output and entry loaders.
+Parcel uses tree shaking to improve the performance of application. Webpack default doesnot have such but can be configured with additional plugin.
+Parcel doesot have provision of code-splitting but webpack has provision of lazy loading using code splitting.
+Parcel has default hot  module replacement but webpack needs additional plugin to configure for HMR.
+
+● - What is `.parcel-cache`
+in parcel v2. Before that .cache
+It stores information when parcel builds your project so when it rebuilds everything in our code need not be re-analyzed or re-parsed.
+With this feature, parcel is fast in development mode. Commiting it to git repository is a bad idea because, it would have large
+number of unnecessary changes to the commit history.
+
+● - What is `npx` ?
+It is basically NPM package runner. It allows to run a command from local or remote npm package as similar as using npm run.
+It allows developers to run any package available in NPM registry without even installing it. Npx doesnot install packages so package pollution in machine
+is not found. 
+
+● - What is difference between `dependencies` vs `devDependencies`
+Dependencies are the packages that are needed to run the project effectivey. They are installed transitively.
+devDependencies are packages that the developer needs during the development or development envirnonment. They are not installed transitively.
+
+● - What is Tree Shaking?
+It is commonly used term in JS for removal of dead code. It relies on analyzing import and export of each module and remove everything
+that is not used. It is also kown as dead code elimination. Bundler like webpack, parcel automatically remove dead code which is 
+very important for preparing production ready app (minimal file size and minimized structure)
+
+Parcel does it in production build. It supports for both static and dynamic import, common js and es modules and even across languages with css modules.
+Parcel also concatenates modules to single scope rather than having multiple functions wrapped into modules. It is called scope hoisting.
+This makes minification more effective. It also improves performance by making references static rather than dynamic lookups.
+
+● - What is Hot Module Replacement?
+It improves the development experience by updating the modules at runtime without needing a whole page refresh. The changes are reflected
+in browser. Parcel HMR support both Js and CSS assets. It helps in retaining application state which gets lost while doing 
+a full page reload. It speeds up development. In production, HMR is disabled.
+
+
+● - List down your favourite 5 superpowers of Parcel and describe any 3 of them in your
+own words.
+1. Minification
+It includes minifiers for JS, HTML, SVG, CSS. It reduces size of output bundles (rename variables shorter, remove whitespace etc)
+2. Tree shaking
+It analyze which modules are not in use and remove in production build
+3. Image Optimization
+It support resizing, converting and optimizing images. It also supports lossless image optimization of png and jpeg files by 
+default in production mode. It reduces size of images without reducing the quality.
+4. Hot Module Replacement (HMR)
+Updates modules in browser at runtime without needing for a whole page refresh. Css changes are also automatically applied
+
+5. Caching
+Parcel caches everything build to its disk. It you restart server, it will only rebuild files that have since last run. The cache is stored in 
+.parcel-cache
+To optimize caching and development experience, parcel uses file watcher that is written in C++ which integrates with low-level file functionality of each operating system.
+Based on this, parcel determine which files need to be rebuilt.
+
+6. HTTPS
+Sometimes we need HTTPS during development. Parcel dev server support HTTPS in dev environment.We can use automatically generated certificate 
+or provide own.
+
+● - What is `.gitignore`? What should we add and not add into it?
+It is a text file that tells git which files or folders that should be ignored in a project. 
+Files that donot need to be committed should be added to .gitignore. That is those files for whom we donot want to track the changes.
+Anything that can be recreated in server with the specs provided should be included in gitignore. For example, crdentials, file downloaded 
+with package managers, os files, language or framework files, etc.
+
+● - What is the difference between `package.json` and `package-lock.json`
+package.json includes metadata about the project and functional dependencies required by the application.
+When package is installed package-lock.json is auto created. It is used for locking the dependency with installed version.
+To avoid differences in installing dependencies in different environments and to generate same results in all environments, 
+we package-lock.json. When installing package in deployment, the package required by project might have a higher version (^2.0.1 as specified initially)
+So, if you want the same version to be installed what was used in development, we need packa-lock.json and we need to push it into git repository.
+Using lock files ensure that each installation remain identical for etnire dependency tree, every single time from anywhere. 
+Lock files are intended to lock all verstion for entire dependency tree.
+Generally, package.json sets minimum version for each dependency.
+
+● - Why should I not modify `package-lock.json`?
+It is a generated file and not designed for manually to be edited. It tracks the entire tree of dependencies and exact version of each dependency.
+It is done by specifying a version, location and integrity hash. Without or modifyin package-lock.json can have different installed 
+versions of packages in different environments. So, chances are problems arise in project deployment with this.
+
+● - What is `node_modules` ? Is it a good idea to push that on git?
+node_modules contain every installed dependecny for your project. It is not a good idea, because as we install more dependecies, the size grows.
+NOt just that, we can reinstall them in our other environments using package.json and package-lock.json and load all the 
+package dependencies of our project.
+
+● - What is the `dist` folder?
+It signifies distribution. It is also named as public/ or build/. The files that are meant for production or public use are located here.
+It contains minimized version of the source code. It is considred good practice to clean dist folder before each build.
+Slight difference
+build/ : compiled version but not production ready
+dist/: production ready compiled, minified version of your code
+public/: used as files that run on browser. It can include html, css or server side js
+
+● - What is `browserlists`
+It is a tool that allows specifying which browsers should be supported in your frontend app by specifying queries in a config file.
+It controls the outputted JS so that emitted code will be compatible with browsers specified.
+
+
+Read about dif bundlers: vite, webpack, parcel
+● Read about: ^ - caret and ~ - Tilde
+Tilde used for approximately equivalent version. Caret used for compatible with version.
+Tilde updates you all with future patch versions. 
+Caret updates with future minor or patch versions. It is default notation  and gives backward compatibility with new functions. 
+
+● Read about Script types in html (MDN Docs)
+
+
+#Additional
+
+● Bundler
+It is a tool that combines all of your code and dependencies into a single file with everything merged known as bundle file.
+It is just one .js file converted to another .js file but with minimal setup.
+Bundling is the process of following or combining all the imports and merging into single file - bundle. This bundle can be included 
+in order to load the entire webpage at once. If used create react app, you will have webpack setup to bundle your app.
+
+● Code splitting
+Bundling is great but as the app grows, so does the bundle. So, with large bundle, it takes large amount of time to load the page. 
+So, to avoid ending up with large bundle, we can split our bundle. Code splitting feature is provided by bundlers like webpack,
+browserfy etc that create multiple bundles and they are dynamically loaded at runtime. Here, code is not reduced but we are just
+avoiding loading code entire at once. We just load what is needed at initial load. Code splitting helps to lazy load only the things
+needed by the user. So, will improve the performance. 
+Many ways to achieve: dynamic import(), React.lazy()
+
