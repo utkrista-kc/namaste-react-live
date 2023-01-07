@@ -1,0 +1,219 @@
+Chapter 01 - Inception
+
+● What is Emmet?
+It is a free add on on variety of text editors. 
+It allows faster and easy way to type shortcuts which are later expanded to full pieces of code.
+It provides shortcut for writing HTML and CSS which expands to HTML markup and CSS rules. By using Emmet, developer will need to 
+type less amount of code which saves time.
+
+● Difference between a Library and Framework?
+Libraries provide developer with predefined methods and classes which speeds up development and improves efficiency.
+Framework aid developers to construct apps for specific platforms.
+Main technical difference between them is called inversion of control.
+One has complete control over application's flow when library is used. It means developer decide when and where one wants to call library.
+When using a framework, flow is controlled by the framework itself. It provides various locations to plug in code but calls the 
+plugged in code only when its needed.
+
+
+● What is CDN? Why do we use it?
+CDN(Content Delivery Network) is a group of servers that are spread around the work for fast delivery of internet content.
+Servers in CDN temporarily store or cache webpage content like images, videos, HTML, Javascript. 
+When users load the webpage, they see the cached content.
+Websites using CDN, 50% reduction in load times.
+CDN balance load of network traffic.
+CDN save bandwidth cost as web hosting providers charge in a way the more data is transferred, the greater is the cost. 
+CDN defend well the Denial of Service(DoS) attack.
+
+● What is crossorigin in script tag?
+CORS stands for Cross Origin Resource Sharing.
+It is a mechanism that allows resources on a webpage to be requested from another domain outside their own domain.
+A crossorigin request is a request of resource(style sheets, iframes, images, fonts or scripts) from another domain.
+CORS is used to manage cross-orign requests.
+The crossorigin attribute sets mode of request to an HTTP CORS Request. It can have values such as anonymous or 
+use-credentials. In anonymous, no credentials are sent. But in use-credentials, credentials such as cookie, certificate, HTTP basic 
+authentication is sent. 
+CORS defines a way how a browser and server interact by determining how safe is to allow cross-origin request.
+Opposite of cross-origin request is same-origin request. It means the documents on the same server or same origin can only
+interact with each other.
+
+
+
+● What is diference between React and ReactDOM
+Prior to  React v0.14, ReactDOM was shipped inside React. But after React v0.14, react was splitted to 
+react and react-dom package. React is JS library designed to build user interfaces.
+ReactDOM binds idea of React into web browser. If we are using components, classes, elements, we are using React.
+If we are using methods like render(), findDOMNode(), unmountComponentAtNode() we are using ReactDOM.
+We know packages like react-native, react-art, react-canvas and react-three uses concept of React but not ReactDOM.
+It shows React has nothing to do with browsers or DOM. So, by splitting it up, it became more easier to build environments
+React can render to.
+DOM stands for document object model. DOM represents entire UI of your application.
+ReactDOM is a package that provides DOM specific methods that are used to enable efficient way of managaging DOM elements of webpage.
+React package contains React.createElement, React.createClass and React.Component, React.PropTypes, React.Children.
+
+● What is difference between react.development.js and react.production.js files via CDN?
+react.development.js version is meant for development. It includes Source Maps, debugging and ofen hot reloading in those builds.
+react.production.js has minified and optimized version of your javascript code (source files) which makes the rendering of file on user's 
+browser very quick. No hot reloading included in production.
+
+
+● What is async and defer? 
+On the webpage, script tags are most common to block the parsint of HTML document. 
+As the browser parses HTML document, when it finds script tag, it waits for script to download and execute it. 
+A new request will be executed to fetch script file on sesrver. Only after this, parsing is resumed. 
+Including script without async or defer is the default way to load scripts in HTML document. This is harmful when we
+place scripts in head tag. Until users see the title of the page, it would take some time to load.
+
+<script async > - script is downloaded in paralled with HTML parsing. When the script is downloaded, it is executed
+blocking the rendering of HTML until it is finished. The execution order of the scripts differ as it might not be the 
+same order in which you load the scripts.
+
+<script defer > - Deferred script will be downloaded in parallel with HTML parsing but its execution is deferred 
+until whole HTML document document has been parsed. Even if multiple scripts are loaded, the same loading order is maintained
+while executing it.
+Both these attributes donot have effect on inline scripts.
+
+
+# Additional concept (Self)
+●  (Virtual DOM)
+DOM - Document Object model
+In simple terms, it is a tree data structure that includes structured representation of HTML elements present in 
+webpage or webapp. DOM represent entire UI of your application. Tree nodes represent each UI element present in web document. 
+It allows to update the content through Javascript. We have seen users using getElementById() or getElementByClass() to update
+DOM. Everytime there is change in state of your application, DOM is updatd and UI is reflected. Since, DOM is tree like structure, 
+updating DOM frequently is not a problem as there are many algorithms to make the update of tree data structure faster. 
+But what is costly while updating the DOM element is that, whenever DOM gets updated, the updated element and children 
+have to be re-rendered to update UI of the webpage. Updating DOM not only involves changing content but recalculating CSS and
+changing complex algorithms that are prone to affecting performance. So, React uses concept of Virtual DOM.
+
+React uses concept of virtual DOM, it is the copy of the real DOM. For every object in real DOM, there exist an object in 
+React Virtual DOM. React Virtual DOM doesnot have power to directly change the layout of document. Changing content on 
+real DOM is slow but on virtual DOM is faster as nothing gets drawn on the screen. 
+React maintains two virtual DOM at a time.
+For any new changes in the application, new virtual DOM is created. So, the changes are compared  between virtual DOM and 
+newly created virtual dom. This process of comparing changes with current and previous is called diffing. Once found, what 
+is changed, React updates only those objects in Real DOM. 
+Changes to real DOM are sent in batches than sending one by one. We know re-rendering UI is the most expensive part, here
+React manages to do it efficiently by ensuring Real DOM receives batch updates to rerender UI. This entire process of 
+transforming changes to real DOM is called Reconciliation. This significantly improves the performance.
+
+● Source Maps
+It allows to map a transformed file back to original source file. The main purpose of source maps is to 
+aid in debugging and help investigating issues from release builds.
+Without source map, when running into the error, the stacktrace doesnot include path, filename, line number of error.
+But with source mapss generated, a stacktrace will include path, file name and line number of the original source file.
+It gives more accurate stacktrace.
+
+
+● Why <!DOCTYPE html> written first?
+It is first html tag written at beginning of any HTML file
+It is not an element nor has its closing tag. 
+It is to tell browser that the rendered document is HTML.
+If broswer doesnot find DOCTYPE declaration, it enters quirks mode ( it is a technique used by some web browsers
+for maintaining backward compatibility with webpages designed for old web browsers)
+
+● Why <html lang="en"> ?
+HTML lang attribute is used to set primary language for document. 
+It helps to identify language of text content on web. It uses ISO language code as its value.
+The lang attribute should also be used to identify language of text in document that is different from document primary language.
+This information helps search engine return language specific results.
+It is also used by screen readers that switch language profiles to provide correct accent and pronounciation.
+It makes no apparent difference unless you are a search engine or screen reader.
+
+● HTML head
+First section containing webpage properties and links to external files. 
+It contains title of page, meta tags, css code (inserted with <style> tag) , open graph tags and css code.
+Maximum size of title should be 70 characters.
+
+● Meta tags or elements:
+Meta tags or meta elements define contents of webpage.
+For example, description meta tag is used by search engine to display description of page in search result. It contains
+what type of information webpage contains. It is most important tag as it is used by search engines to rank page in search results.
+It should be 150 to 160 characters.
+
+● Charset (Alternatively character set, charset and character encoding, character code)
+It specifies character encoding for HTML document.
+It describes specific encoding for characters as defined in code page. Code page is a page containing list of character 
+codes andd corresponding characters. Charset defines how characters are mapped to bits. ASCII(American Standart Code for Information Interchange) 
+was early standardized encoding system for text. Encoding is process of converting characters in human languages into binary
+sequences that computers can process. ASCII'S library includes every upper case, lower case, digit and some symbols. It assigns 3 digit ASCII code and a unique byte.
+The number of characters ASCII can represent is limited. In original ASCII table each character encoded in 7 bits so 128 characters. Nowadays, most
+editors or readers use extended ASCII table which is encoded on 8 bits so 256 characters included.
+When ASCII was introduced in 1960, it was enough as developers only needed 128 bytes to reprsent all English characters and symbols. 
+But as computing expanded globally, computers began to store text in languages besides English, many used non-ASCII characters.
+New systems were developed to map this, but developed needed a better way to encode all possible characters with one system.
+
+● UTF-8 (Unicode Transformation Format - 8 bits)
+Unicode solves space issue of ASCII. It assigns character a unique code called code point. It can produce over million code points
+to enconter every character in every language. It is universal standard for encoding human languages. It also includes emojis.
+BUt, Unicode alone doesnot store words in binary. Computers need a way to translate unicode to binary so that its characters can be 
+stored in text files. So, here UTF-8 comes in. UTF-8 is an encoding system for unicode. It can translate any unicode character to 
+a matching binary string and also translate a binary string back to unicode character. UTF-8 convert some characters to one byte
+and some to 4 bytes to save memory. UTF-8 allows much larger number for less-common characters. Spatial efficiency is key advantage of UTF-8.
+It has backward compatibility with ASCII.
+
+<meta charset="UTF-8"> - This tells browser that HTML file is encoded by UTF-8
+
+UTF-8 encodes character into binary string of ont, two, three or four bytes. UTF-16 encodes a unique character into a string of either two or four bytes.
+UTF-16 occupies more space so is efficent only on some non english websites.
+HTML5 specification encourage web developers to use UTF-8 character set as it includes all the characters and symbols of the world.
+
+
+●  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+There was problem to create css to address older version of IE(Internet Explorer)
+X-UA-Compatible is a document mode meta tag that allows web authors to choose what version of Internet Explorer the page should 
+be rendered as. Edge mode tells internet explorer to display content in the highest mode available.
+
+●  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+Browsers viewport is the area of window in which web content can be seen. It is not the same size as rendered page so 
+browser provides scrollbar for users to scroll around and access content. Vitual viewport is used to make non-mobile-optimezed
+sites in general to look better on narrow screen devices. However, this is not good for pages that are optimized using media queries.
+viewport mitigates problem of virtual viewport on narrow screen devices as when webpage rendered in narrow mobile device, since it has
+viewport larger than the screen, the webpage appears zoomed out version wher user can zoom in different section of page.
+
+width=device-width- controls size of viewport
+initial-scale=1.0 -> controls zoom level when page is first loaded.
+
+
+● Open graph
+It is a technology introduced by Facebook in 2010 that allows integration of facebook and website data. 
+By integrating open graph meta tags into page content, we can identify which elements of our page we want to show when one
+share the webpage. By specifying open graph information, facebook need not guess what information to use when page is shared.
+
+● HTML body 
+It contains all the main content of the webpage.
+
+● Shortest program of javascript -empty file
+Shortest program of react - cdn script
+
+● React element is nothing but an object
+● ReactDOM is responsible for all DOM operations
+
+● Can we have multiple roots in React?
+Generally, we see single root and one render element, doesnot matter how big is the application.
+
+● We can use react in existing project too.
+
+● React will override whatever preexisting content is inside div root. It will update root with its content. 
+Few seconds lap can be seen because React is loading some scripts initially or during refresh.
+
+● When we pass  multiple children in React we pass array.
+
+● React came in with idea of writing html, css inside Javascript
+
+● For larger applications, writing React.createElement is not user friendly so JSX came in.
+
+● Js files are linked in bottom of the body because whenever browser encounters JS, it stops HTML parsing and starts
+loading and executing the script. If added to top, it would make page rendering slow and it would take long to load page.
+NOt just that DOM won't be fully rendered, JS won't be able to manipulate the elements in DOM.
+
+● Css files are placed in head because they are applied regardless of DOM rendered fully or not. So, the webpage looks elegant
+as soon as it loads. If you place css to end, the webpage loads HTML and css is applied to it. It will be visible in screen.
+If the internet connection is slow, css would take time to load, so user would be seeing plain HTML initially. There is not 
+network request for CSS, so CSSOM (CSS Object Model) building starts immediately. CSSOM cannot be cached, it should be recreated
+in each page. Actual CSS files can be cached in order to load assets faster but rendering a page in browser always requires
+running a CSSOM parser. While processing HTML, the parser might find link element referencing external stylesheet. 
+So, this CSS stylesheet is parsed into a map using CSS Object model specs. The resulting code is then applied to elements of DOM.
+
+● HTML rel="stylesheet" 
+This attribute value specifies that external link is a stylesheet that will be applied to current page. This setting only applies to 
+<link> tags. URL for css is specified by href attribute.
