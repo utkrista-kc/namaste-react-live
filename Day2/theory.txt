@@ -136,7 +136,7 @@ Generally, package.json sets minimum version for each dependency.
 
 ● - Why should I not modify `package-lock.json`?
 It is a generated file and not designed for manually to be edited. It tracks the entire tree of dependencies and exact version of each dependency.
-It is done by specifying a version, location and integrity hash. Without or modifyin package-lock.json can have different installed 
+It is done by specifying a version, location and integrity hash. Without or modifying package-lock.json can have different installed 
 versions of packages in different environments. So, chances are problems arise in project deployment with this.
 
 ● - What is `node_modules` ? Is it a good idea to push that on git?
