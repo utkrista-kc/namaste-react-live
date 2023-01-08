@@ -57,7 +57,7 @@ browser very quick. No hot reloading included in production.
 
 
 ● What is async and defer? 
-On the webpage, script tags are most common to block the parsint of HTML document. 
+On the webpage, script tags are most common to block the parsing of HTML document. 
 As the browser parses HTML document, when it finds script tag, it waits for script to download and execute it. 
 A new request will be executed to fetch script file on sesrver. Only after this, parsing is resumed. 
 Including script without async or defer is the default way to load scripts in HTML document. This is harmful when we
@@ -140,7 +140,7 @@ The number of characters ASCII can represent is limited. In original ASCII table
 editors or readers use extended ASCII table which is encoded on 8 bits so 256 characters included.
 When ASCII was introduced in 1960, it was enough as developers only needed 128 bytes to reprsent all English characters and symbols. 
 But as computing expanded globally, computers began to store text in languages besides English, many used non-ASCII characters.
-New systems were developed to map this, but developed needed a better way to encode all possible characters with one system.
+New systems were developed to map this, but developers needed a better way to encode all possible characters with one system.
 
 ● UTF-8 (Unicode Transformation Format - 8 bits)
 Unicode solves space issue of ASCII. It assigns character a unique code called code point. It can produce over million code points
@@ -153,7 +153,7 @@ It has backward compatibility with ASCII.
 
 <meta charset="UTF-8"> - This tells browser that HTML file is encoded by UTF-8
 
-UTF-8 encodes character into binary string of ont, two, three or four bytes. UTF-16 encodes a unique character into a string of either two or four bytes.
+UTF-8 encodes character into binary string of one, two, three or four bytes. UTF-16 encodes a unique character into a string of either two or four bytes.
 UTF-16 occupies more space so is efficent only on some non english websites.
 HTML5 specification encourage web developers to use UTF-8 character set as it includes all the characters and symbols of the world.
 
