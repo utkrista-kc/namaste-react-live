@@ -16,7 +16,7 @@ plugged in code only when its needed.
 
 
 ● What is CDN? Why do we use it?
-CDN(Content Delivery Network) is a group of servers that are spread around the work for fast delivery of internet content.
+CDN(Content Delivery Network) is a group of servers that are spread around the world for fast delivery of internet content.
 Servers in CDN temporarily store or cache webpage content like images, videos, HTML, Javascript. 
 When users load the webpage, they see the cached content.
 Websites using CDN, 50% reduction in load times.
