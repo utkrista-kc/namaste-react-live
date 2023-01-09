@@ -146,7 +146,7 @@ package dependencies of our project.
 
 ● - What is the `dist` folder?
 It signifies distribution. It is also named as public/ or build/. The files that are meant for production or public use are located here.
-It contains minimized version of the source code. It is considred good practice to clean dist folder before each build.
+It contains minimized version of the source code. It is considered good practice to clean dist folder before each build.
 Slight difference
 build/ : compiled version but not production ready
 dist/: production ready compiled, minified version of your code
