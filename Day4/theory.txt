@@ -1,0 +1,49 @@
+Chapter 04
+
+● JSX is not mandatory. Using ES6 is not mandatory. 
+
+● 3 ways to load components
+1. <Title> <Title/>
+2. <Title /> (Generally used)
+3. {Title()}
+
+● Always start with application planning
+● Any piece of JSX componet you write, there can only be one parent. JSX can only have one parent so there is something known as 
+React.Fragment. React.Fragment is a component which is exported by React. We can use it in our code by using <React.Fragment></React.Fragment>
+We can even use div and make parent but if we donot want that we can use React.Fragment. React.Fragment is like an empty tag.
+<> </> can also be used for React.Fragment. It is handy but we cannot pass any style or attribute in empty tag.
+● For JSX inline style, it takes some object. Object is javascript, we need to wrap object.
+<div style={{backgroundColor:"red"}} ></div>
+● Config driven UI - Our website depends on data coming from API
+● Optional chaining
+● Props - properties
+Data passed from parent to child
+● Difference between argument and parameters
+function fn(params, param2) {
+    - You receive paramters
+}
+
+fn("xyz", "tyx") - pass in arguments
+
+●  Destructuring the object
+●  Map is the best way to do functional programming in general practice.
+●  Difference between map and foreach
+●  Why you need virtual dom- Reconciliation in React
+Reconciliation is algorithm React uses to diff one tree from other. It determines what needs to change in UI and what does not change in UI.
+Whenever you have multiple children with same attribute, we need key to know which child is changed. So, react will only re-render that child 
+if unique key is given.
+Virtual DOM is representation of actual DOM.
+React uses Reconciliation that uses diff algorithm for finding difference between trees. React will only rerender diff portion of our app.
+
+If new div is added, React will not know which div is added. So rerenders all the child divs. 
+So, if we give key, React knows which child is added so renders only that.
+
+●  React Fiber
+New reconciliation engine (Read from github repository)
+
+●  Why don't we use index as key?
+Never use index as key.
+
+● Can we use React.Framgment inside React.Fragment?
+● We cannot give style to React.Fragment. We have to use div.
+● Map is best way to do functional programming
