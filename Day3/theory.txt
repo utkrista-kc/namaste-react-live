@@ -1,0 +1,177 @@
+Chapter 03: Laying the foundation
+
+
+● Polyfill
+It is a piece of code (usually JS) used to provide modern functionalities on older browsers that donot natively support.
+It is essential to provide common API that worked in all browsers. In th past, there was problem to have project work on all devices. 
+Nowadays, using polyfill for browser-specific implementation is less common because, modern browsers implement broad set of APis 
+according to standard semantics. If some functionalities are not understood by browsers, our code is converted to older code that 
+browser understand. Babel converts our code to older code.
+There are latest updates on lets say es6, we use. But there might be some browsers that donot support that. So, polyfills are 
+piece of code that gives similar functionality as we use in latest update of es6 to the older browser versions.
+
+● Babel
+It is a JS compiler.
+It is a toolchain used to convert new version of code to backward compatible version of JS in current and older browsers environment.
+Babel transforms syntax, polyfill features that are missing in target environment, source code transformation and more.
+It is a famous transpiler. It coverts latest JS code into one that the browser understand. It gives us privilege to make use of 
+latest JS that offers without worrying whether it will work on browser or not.
+
+
+● Transpiler
+It is a tool to convert source code to another source code of same level. So, it is also known as source to source compiler.
+
+● npx is equivalent to npm run
+If you want packages inside your project use npm else if you want to use without downloading use npx
+
+● When using parcel and babel, console logs are not automatically not removed. So, there is package that removes,
+babel-plugin-transform-remove-console.
+
+● If multiple children, give keys.Keys should be unique.
+
+● React.createElement -> Object -> HTML(DOM)
+
+● For larger HTML, we use JSX as React.createElement messes up
+JSX is html like syntax but it is not html inside javascript.
+It is more readable.
+JSX => React.createElement => Object => HTML DOM
+Babel understand JSX and converts to React.createElement
+
+JSX is not react. React.createElement and others are React.
+Readable, developer friendly, mantainable
+Babel comes with parcel installation.
+Lets say h1 is React element.
+● Everything is component in React. Two types of component in React
+- Functional: New way
+- Class Based Component: Old way of writing code
+Class component important for interview and older versions of project.
+Functional component is nothing but a JS function that returns JSX or react element or composition of react element or component.
+Functional component name starts with capital letter.
+We can also skip to write return. It is arrow function thing.
+function => () => ()
+function => () => {return ()} 
+
+To render react element, use simple name. To render component wrap it in < Component />
+React element is object.
+In JSX, writing {} we can write any piece of JS code.
+JSX is very secure. JSX takes care of attacks. When any JS is given, it does sanitization.
+● JSX needs babel to run. If babel not installed in any form, JSX doesnot work.
+
+● Component Composition - Nested Components
+React has powerful composition model so in order to reuse components, we  need to use component composition instead of inheritance.
+They don't recommend using inheritance hierarchies for creating components.
+
+● React Reconciliation (OfficialDoc)
+React's diffing algorithm makes component updates faster for high performance apps. When render() function is called, 
+React is creating a tree of React elements. When another time, render function is called, new tree is created. Here, React
+needs to figure out optimal way of applying updates on real DOM based on the recent tree. So, there are some solutions like
+state of art alogrithms takes O(n^3) where n is the number of elements in tree. If React has 1000 elements in tree, it is costly
+for comparison. React implements heuristic O(n) algorithm with two assumptions:
+a) two elements of diffrent type will have different tree
+b) children elements will have a key
+
+When root elements have different tree, old DOM nodes are destroyed and new are created.
+When DOM elements has same type, React looks at DOM attributes and only updadtes the attribute changes.
+In case of children, if no key is provided, when adding items at start of list, it will re-render everything as it doesnot know
+what element it can persist. In order to solve this, React supports key attribute. The key should be unique among siblings, 
+not globally. If no options, we can use index as key but only if there is no need of items to be re-ordered. If they need to be 
+re-order, the process will be slow. Keys should be stable, predictable and unique. Unstable keys such as produced by 
+Math.random() will cause performance degradation and loss of state in child components.
+
+
+# Assignment
+
+● What is JSX?
+It is not HTML. It is syntax extension to Javascript. One might find JSX similar to HTML but it comes with full power of 
+Javascript. JSX produces React elements. Instead of separating logic and markup in separate files, React allows it with
+units known as components. React don't require using JSX but it is helpful for developers.
+Since, JSX is closer to JS than HTML, ReactDOM uses camelCase property naming conventions unlike HTML attribute names.
+Babel compiles JSX to React.createElement() calls.
+
+●  Super powers of JSX
+Escaping in HTML means replacing soome special characters with others. In HTML, you replace "<", ">", "", & etc.
+It is safe to render user input in JSX. It is because, ReactDOM escapes any values embedded in JSX before rendering them.
+So, we cannot inject anything except what is written in application. Everything is converted to string before being rendered.
+This prevents XSS(Cross-site-scripting) attacks.
+
+
+●  Role of type attribute in script tag? What options can I use there?
+It represents type of content in between <script></script> tag. We can use async, defer, crossorigin, src, type, refererpolicy, etc.
+<script type="module"> represent that module is being pointed.
+
+● {TitleComponent} vs {<TitleComponent />} vs {<TitleComponent></TitleComponent>} in JSX
+{TitleComponent} - to load a element
+{<TitleComponent />}
+ {<TitleComponent></TitleComponent>} - both to load component
+
+
+# Additional
+● Why hidden Lockfiles (Why node_modules directory has package-lock.json?)
+They exist to reduce processing of node_modules folder repeatedly. It contains whole information about package tree, so need to 
+read package.json or node_modules hierarchy is removed from npm version v7.
+It doesnot read entire node modules package tree if the conditions following are met:
+a) All packages referenced exist in node modules hirerarchy.
+b) All packages not listed in lockfile donot have package folders in node_modules.
+c) The modified time of the file is at least time as of all the package folders it references.
+This file will be relevant if it was created because of some updates happened to package tree. 
+If it was copied or mutated through CLI, that is detected and this file is ignored.
+This file is ignored by older npm versions. It uses node_modules tree to update information directly.
+
+Outside package-lock.json will not have information about version of transitive dependencies. But that is maintained by hidden
+package-lock.json.
+
+npm-shrinkwrap.json
+It is file created by command npm shrinkwrap. It is similar to package-lock.json but the only difference is we can include when
+publishing a package. Recommended for publishing packages to registry (such as devDepencies, cli-tools). But it is discouraged
+because users cannot have control over transitive dependency updadtes. If both package-lock.json present and npm-shrinkwrap.json
+present, npm-shrinkwrap.json will be preferred over another.
+
+
+● JS modules
+Use of native JS modules is dependent on import and export statements. Modern browsers have started supporting module 
+functionality natively. It is good because, browsers can optimize loading of modules to make it more efficient than,
+having to do library and do extra client side processing.
+A mechanism of splitting  JS programs into separate modules and importing when needed. Node.js had feature over long time
+like commonJS(recognized by use of require() and module.exports), RequireJS, etc.
+
+convenient way of exporting : export {name, draw, ...};
+Convenient way of importing: import {name, draw} from './filenamej';
+
+<script type="importmap">
+One can specify mapping elements in JSON object and values will be substituted when browser resolves module URL.
+
+Dynamic module loading
+- It is a recent addition to JS module functionality. It allows to load modules dynamically when needed instead to have them
+loaded upfront. This has performance advantages.
+Example: 
+import('./modules/myModule.js')
+  .then((module) => {
+    // Do something with the module.
+  });
+
+Top level await is available with modules. It means we can use await keyword. It means we can consider modules as asynchronous 
+functions which can be loaded without blocking other siblings from loading. 
+Asynchronous programming is a technique that enables our program to start a potentially long running task and still be
+responsive to other events while that task runs rather than waiting until the task has finised. Once task is finished, your 
+program is presented with result.
+Many functions provided by the browser can potentially take a long time. For example:
+Making HTTP requests using fetch(), accessing user's camera or microphone using getUserMedia() or asking users to 
+select files using showOpenFilePicker().
+Event handlers are form of asynchronous programming. You provide a function i.e. event handler but they will not be called right away.
+But they will be called when event happens. If the event lets say asynchronous operation is completed, event could be used to 
+notify caller the result of aynchronous function call. Some early asynchronous APIs used events in this way. XMLHttpRequest 
+API enables one to make HTTP requests to remote server using JS. Since, it takes long, it is a asynchronous API. One can get
+notified about the progress and completion of request by attaching event listeners to XMLHttpRequest object. 
+Callback is a type of event handler. It is just a function that is passed to another function with expection that it is called 
+at appropriate function. Callbacks used to be way of handling aynchronous functions in JS. Callback based code can be 
+hard to understand when callback itself has to call another function that accepts a callback. This is common situation when
+if one needs to perform some operation that breaks into series of aynchronous functions. When we have to call callbacks inside
+callbacks, it deeply gets nested. This is called callback hell or pyramid of doom. In this case, it becomes hard to handle errors 
+from top level and we have to do at each level.
+
+For this reasons, modern aynchronous API donot use callbacks. So, foundation of JS is Promise. 
+Promises are object returned by aysnchronous function which represent current state of operation. At the time, promise is returned 
+to caller, the operation is not finihsed but promise object provides methods to handle success or failure of operation.
+async code provides way to work with asynchronous promised based code. Using async makes function asynchronous and await 
+keyword before to call a function which makes the code wait until promise is settled. This enables one to write code that uses
+asynchronous functions but looks like synchronous code.
