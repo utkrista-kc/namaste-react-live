@@ -8,7 +8,8 @@ Chapter 05
 ● Create new file for component
 ● Functional component name and file name should be start with capital letter
 ● Two ways of exporting component
-a) export default Component - We can export default only one component, we import import Component from './folder'. This is called default import.
+a) export default Component - We can export default only one component, we import import Component from './folder'. This is called default import. Same name 
+doesnot need to match in default import. But it is a good practice to have same name as default export.
 b) export const Component - To export multiple components, we import in this way import {Component} from './folder'. 
 This import is called named import. This is not object destructuring.
 We can also use to import everything: import * as obj from './folder'
@@ -24,11 +25,16 @@ Our app becomes unpredictible if we get to update local variables directly. We w
 It will also impact optimization. 
 useState Hook returns an array. Array has first item variable name and set function(set the value of variable);
 onChange gets a function with event.
+[variableName, function to update the variable]
 
 ● Why do we need state variables?
 Whenever a variable changes, something changed variable but React would not know that it needs to update DOM and change it into UI.
 React has no idea what is happening to your variables. So, to update variables in sync with UI, we need to use state variables.
 Change is re-rendered when changes encountered.
+
+● If we need a variable that changes its state, we need to maintain a variable that is React kind of variable. Every compoonent
+in React maintains a state so we can put all variables into state. So, we will create variables using useState Hook.
+Hooks is just normal function. We get useState from react. Hooks create local state variables.
 
 #Read about synthetic events.
 Oneway and two way data binding
