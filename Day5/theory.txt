@@ -131,6 +131,7 @@ independently and resued. Hooks allow us to reuse stateful logic without changin
 one component into smaller functions based on what pieces are related.
 Hooks are functions that lets you hook into React state and lifecycle features from function components. Hooks donot work inside 
 classes they let us use React without classes. React provides built in hooks like useState.
+React provides a bunch of standard in-built hooks like useState(), useEffect(), usecontext(), useReducer(), usecallback, useMemo(), useRef(), useLayoutEffect(), useDebugValue() and other additional hooks.
 
 ● Why do we need a useState Hook?
 useState returns a pair of values: the current state value and function that lets you update it.
