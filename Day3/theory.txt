@@ -171,7 +171,7 @@ from top level and we have to do at each level.
 
 For this reasons, modern aynchronous API donot use callbacks. So, foundation of JS is Promise. 
 Promises are object returned by aysnchronous function which represent current state of operation. At the time, promise is returned 
-to caller, the operation is not finihsed but promise object provides methods to handle success or failure of operation.
+to caller, the operation is not finished but promise object provides methods to handle success or failure of operation.
 async code provides way to work with asynchronous promised based code. Using async makes function asynchronous and await 
 keyword before to call a function which makes the code wait until promise is settled. This enables one to write code that uses
 asynchronous functions but looks like synchronous code.
