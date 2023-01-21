@@ -1,0 +1,61 @@
+Chapter 07
+
+# During Lecture
+
+● useEffect is hook that renders after component is rendered. It takes two parameters, first is callback function second one is dependency array.
+If we donot pass anything in dependency array but if we donot pass anything, our component doesnot depend on anything, so it will be
+called everytime our component renders, it will be called after each render. If we pass some value in dependency array, it will be called
+after component render and everytime the value changes.
+● Never create a component inside a component in React. We can compose component but never create component inside component.
+Suppose, if our app is rendered, the nested component will be created as many times, the render happens.
+● Never write useState inside if statements. useState creates its own variables but if there is if condition, React doesnot like 
+inconsistencies. Also, never write it inside for loop. 
+● React gives useState so that we can creat local state in functional components. 
+Donot create useState outside of functional component.
+● We can create a lot of use effect hook.
+● Why cdn images are faster?
+● 
+() => {
+    // code
+    return 42; // return is required in block statment
+}
+
+
+() => 42 // return is implicit
+● For everything, we need not import package.
+● Never use auto import
+● For forms and doing tedious work, use formik.
+● When we use createBrowserRouter, it creates router and it takes our configuration. We define when we give some path, which page loads.
+This is recommended for React projects. createBrowserRouter takes list of paths.
+To provide our configuration to our app, a component RouterProvider is imported from react-router-dom 
+React router dom is not created by Meta, it is developed by Remix.
+● React router dom gives us useRouteError hook. It gives access to error object. It gives information about what type of error you have.
+● Problem with anchor tags, when we click on it, it refreshes whole page. We are building a single page application. SPA - Single Page 
+Application. Earlier in past to load a page, we had to go to lets say about.html, home.html. In past, network calls to pages used 
+to be made when navigating to different pages. With SPA, we donot refresh whole page. 
+● There are two types of routing
+Client Side Routing - React does the client side routing, no network calls are made as the components are already there in the code. 
+We donot need to go to server to load the page.
+
+Server Side Routing - It is a way all our pages come from server. If we change a route, then that page comes from server. In past, we
+used to make calls to pages, there used to be network calls.
+
+● React router dom gives Link in place of anchor tags <a></a>. 
+At the end of day, Link tags are converted to <a> tags behind the scene. But react router dom is also keeping track of all the links.
+Browser understands anchor tags, so we have to convert into something that browser understand.
+
+● For nested routing suppose we want to have header and footer in all pages, we need to change configuration. So, we have to make pages
+children of route. So, we will not pass anything in the component in between header and footer. React router dom gives access to 
+outlet component. It will be filled by children configuration. All the children go to outlet according to route. Our reconciliation 
+algorithm knows exactly what needs to be changed so everything does not update in dom. Outlet is nowhere in browser dom to be seen. It is replaced by 
+out components.
+● Dynamic Routing / Segments
+React router dom gives access to hook useParams which allows us to read dynamic URL params.
+● 
+● 
+
+# Additional
+1. Read react router dom
+2. Read about formik
+3. React Object.values
+
