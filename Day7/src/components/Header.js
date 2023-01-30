@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Logo from "../assets/img/foodvilla.jpeg";
 import { Link } from "react-router-dom";
+import Login from "./Login";
 
 const Title = () => (
   <a href="/">
@@ -31,9 +32,13 @@ const Header = () => {
       </div>
 
       {isLoggedIn ? (
-        <button onClick={() => setIsLoggedIn(false)}>Logout</button>
+        <Link to="/">
+          <button onClick={() => setIsLoggedIn(false)}>Logout</button>
+        </Link>
       ) : (
-        <button onClick={() => setIsLoggedIn(true)}>Login</button>
+        <Link to="/login">
+          <button onClick={() => setIsLoggedIn(true)}>Login</button>
+        </Link>
       )}
     </div>
   );

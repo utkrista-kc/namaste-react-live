@@ -51,11 +51,114 @@ algorithm knows exactly what needs to be changed so everything does not update i
 out components.
 ● Dynamic Routing / Segments
 React router dom gives access to hook useParams which allows us to read dynamic URL params.
-● 
-● 
+
+# Assignment
+
+1. What are various ways to add images to our App? Explain with code examples
+Images in React App can be kept in public or src folder and import into component or HTML file to show it to the users.
+Only the files inside src are prcessed by webpack. We can put any js or css file, webpack will not process it. Only files inside
+public can be used by public/index.html. We can use special variable PUBLIC_URL.
+Variaous ways to add images are as follows:
+a) Display an image from URL in React
+We can use img tag and set its src with URL of the image. Optionally, we can use alt to set short description of the image.
+  <img
+        src="https://bobbyhadz.com/images/blog/react-prevent-multiple-button-clicks/thumbnail.webp"
+        alt="car"
+      />
+b) Display an image from local path in React
+We can download the image and place it to src directory. We can import the image and set src of img tag with imported image.
+import MyImage from './thumbnail.webp';
+ <img src={MyImage} alt="horse" />
+Depending upon setup, we can also use require() to display local images.
+<img src={require('./thumbnail.webp')} alt="horse" />
+
+c) Display an image from public directory
+We can also render images that are in public directory of our project. We can use an absolute path when images are placed in public directory.
+<img src="/images/thumbnail.webp" alt="horse" />
+
+2. What would happen if we do console.log(useState())?
+We get an array, [undefined, f], the first state variable is undefined and the set function name is bound dispatchSetState.
+
+3. How will useEffect behave if we don't add a dependency array?
+If we donot pass dependency array, it runs after first initial render of component and on every re-render of component.
+
+4. What is SPA?
+It is a web application document that loads single web document and updates body of the document with the use of Javascript APIs.
+Performance is increased when one need not load whole page from server and the experience is more dynamic. However that are some
+disadvantages such as SEO, more effort to maintain state, implement navigation and performance monitoring. SPAs donot require 
+page reloading. Examples: Facebook, gmail, google map, etc. SPA is fast because the resources(HTML, JS, Scripts) are loaded only 
+once during entire lifespan of application. Only data is transmitted back and forth. SPAs are easy to debug with Chrome. It is easy
+to make mobile application because same backend code for web application can be used for mobile application. SPA can cache 
+any local storage effectively as request is sent only once where all data is stored and can be accessed. It also works offline.
+SPA is slow to download because heavy client frameworks are required to be loaded to the client. Memory leak in Javascript can
+cause even powerful system to slow down.
+
+There are two main design patterns for web application: Multi page application(MPA) and Single Page Application(SPA)
+
+In MPA, in every change requires a new page to be fetched from the server. These applications are bigger than SPA. It has more complexity
+to develop. It is easy for proper SEO management as different keyword can be optimized for different page. In MPA, there is no 
+option of using same backend for web and mobile applications. Frontend and backend development are tightly coupled. The development is 
+complex so the development time is longer.
+
+5. What is difference between Client Side Routing and Server Side Routing?
+In server side routing whenever we click a navigation or link, whole page is refreshed and loaded with new page. It is because
+a GET request is sent to server and server sends back a new document discarding the old page. It has become a standard for long time 
+sor search engines are optimized for webpages that come from server. Every request needs a full page refresh so unnecessary data is being requested.
+It takes some time for the page to be rendered.
+
+In client side routing, browser detects that user has clicked link. Routing library catches and detects that it is not an external link 
+and prevents making HTTP GET request. The routing library manually changes the URL and then changes the state of the application.
+The application then processes state changes. It might be new components changes or requesting some data from server or any other but the response is not entirely a webpage.
+The whole page won't refresh using client side routing. Routing between is faster and easy to implement smooth transition and animation
+between views. Some cons are: Whole webpage needs to be loaded at first so initial loading takes some time. For the routing to work, 
+it requires extra code or even some library. Search engine crawling is less optimized. Google is making efforts to make good progress
+on crawling single paged application but it is not efficient as server side routed websites.
+A plain HTML document can link to other documents and the browser handles the history stack itself. Client Side Routing enables developers to 
+manipulate the browser history stack without making a document request to the server
+
+6. Create a login page using formik library.
 
 # Additional
 1. Read react router dom
 2. Read about formik
-3. React Object.values
+Formik is a small library that helps in following ways:
+- Getting values in and out of form state
+- Validation and error messages
+- Form submission handling
+It is scalable, performant form helper with minimal APIs.
+Why not Redux forms?
+- Form state are very short lasting(ephemeral) and local, so tracking it in redux or any flux library is unnecessary.
+- Redux form calls entire top level redux reducer on every key stroke. It is not a problem in small apps but for large application
+input latency increases.
+- Minimized formik is 12.7kb whereas redux-form is 22.5 kb.
 
+Formik is compatible with React15+. Formik keeps track of form state with few reusable methods and event handlers(handleChange, handleBlur, 
+handleSubmit) which 
+are passed as props.
+
+We pass form's initial values and a on submit function to use useFormik() hook. The hook returns form state and helper methods 
+in variable we assign. In Login.js, the variable is formik.
+Few helper methods: 
+- handleSubmit: handles submission
+- handleChange: change handler to pass to each <input>, <select> or <textarea>
+- values:Form's current values
+
+These values are passed to respective props. Instead of managing all the event handlers and managing form input, we just use 
+useFormik() hook
+
+We pass id and name to the html attribute same to the property defined in initialValues. We access the field's value using 
+same name such as formik.values.email.
+
+It is not good to show errors on each keystroke. So, formik keeps track of fields that have been visited or not. It keeps information 
+in an object called touched. To use touched, we pass formik.handleBlur to each input's onBlur prop.
+
+3. Read Object.values
+
+Object.values() static method returns array of values of the given object's key-value pairs.
+const object1 = {
+  a: 'somestring',
+  b: 42,
+  c: false
+};
+console.log(Object.values(object1));
+Result: Array ["somestring", 42, false]

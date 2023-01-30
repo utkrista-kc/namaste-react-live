@@ -16,6 +16,7 @@ const Body = () => {
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [searchText, setSearchText] = useState(""); // To create state variable
 
+  console.log(useState());
   // empty dependency array => once after render
   // dependency array[searchText] => once after initial render + everytime after rerender(my searchText changes)
   useEffect(() => {

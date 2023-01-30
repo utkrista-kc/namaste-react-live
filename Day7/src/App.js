@@ -11,6 +11,7 @@ import RestaurantMenu from "./components/RestaurantMenu";
 
 //creating configraton for router
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import Login from "./components/Login";
 
 const AppLayout = () => {
   return (
@@ -44,6 +45,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/restaurant/:resId",
         element: <RestaurantMenu />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
     ],
   },
