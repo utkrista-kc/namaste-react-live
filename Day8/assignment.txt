@@ -1,0 +1,223 @@
+Chapter 08 - Lets get Classy
+
+1. How do you create Nested rotues react-router-dom configuration
+Nested routing couples segments of URL to component hierarchy and data. React route's nested routes are inpired by routing in Ember.js.
+We can create nested routes by adding children attribute to object of createBrowserRouter.
+
+A short example would be:
+createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    children: [
+      {
+        path: "contact",
+        element: <Contact />,
+      },
+      {
+        element: <AuthLayout />,
+        children: [
+          {
+            path: "login",
+            element: <Login />,
+            loader: redirectIfUser,
+          },
+          {
+            path: "logout",
+            action: logoutUser,
+          },
+        ],
+      },
+    ],
+  },
+]);
+
+2. Read about createHashRouter, createMemoryRouter from react router docs
+
+createHashRouter: 
+createHashRouter is used when one cannot configure to direct all traffic to react router application. Instead of using normal URL, 
+it will use hash(#) portion of URL to manage application URL. Using hash URL is not recommended. Its functionality is same as 
+createBrowserRouter. One example of hashrouter would seem as : https://jzn9rnm6ov.csb.app/#/schedule
+
+createMemoryRouter:
+Instead of using browsers history, memory router uses its own history stack in memory. It can be used to test component development 
+tools like storybook or running react router outside of browser that is non-browser environment.
+
+createBrowserRouter:
+It is recommended for web projects. It uses DOM history API to manage URL and manage the history stack.
+createBrowserRouter(routes, {
+  basename: "/app",
+});
+
+The basename for app is for cases when we cannot deploy to root of domain.
+
+3. What is the order of lifecycle method calls in class based components
+
+# Mounting
+- constructor()
+- static getDerivedStateFromProps() - called before render both on initial render and subsequent updates. It should return object 
+to object state or null to update nothing. It is used for reare usecases. It enables a component to update its internal state as a result 
+of change in props.
+- render()
+- componentDidMount()
+
+# updating
+- static getDerivedStateFromProps()
+- shouldComponentUpdate() - it is to let React know that component output is not affected by current change in props or state. It's 
+default behaviour is to re-render on every state change. It is invoked when new props or state are received. The default value is true. 
+This method is not called in initial render. It only exists as performance optimization by reducing unnecessary updates.
+- render()
+- getSnapshotBeforeUpdate()
+It is invoked when most recently rendered output is committed to DOM. It enables component to capture information(scroll position) from DOM before it 
+is potentially cahnged. Any value received here will be passed as paramter to componentDidUpdate(). It is not commonly used but might be 
+required in UIs like chat thread that need to handle scroll position in special way.
+- componentDidUpdate()
+
+
+# unmounting
+- componentWillUnmount
+
+
+4. Why do we use componentDidMount?
+It is invoked after component is mounted in DOM. If we need to fetch data from remote endpoint, this is a good place for 
+network calls. It is also good place to set up subscriptions whereas unsubscribe is done in componentWillUnmount.
+
+5. Why do we use componentWillUnmount? Show with example
+It is invoked after component is unmounted or destroyed. We can do cleanup in this method such as invalidating timers, 
+cancelling network requests, cleaning up subscription that were created in componentDidUpdate. We should not call setState here 
+because the component will never be re-rendered. Once unmounted component will not mount.
+Example would be clear interval.
+
+class Profile extends React.Component {
+  constructor(props) {
+    super(props);
+
+    //Create State
+    this.state = {
+      count: 0,
+    };
+  
+  }
+
+  async componentDidMount() {
+    this.timer = setInterval(() => {
+      console.log("Namaste React OP");
+    }, 1000);
+  
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.count !== prevState.count) {
+    }
+    console.log("Component Did Update");
+  }
+
+  componentWillUnmount() {
+    // clearInterval(this.timer);
+    console.log("Component Will Unmount");
+  }
+  render() {
+    return <h1>Test</h1>;
+  }
+}
+
+6. (Research) Why do we use super(props) in constructor of class based components?
+If we donot define super(props), this.props will be undefined in the constructor which can lead to bugs. Basically, defining 
+gives access to this.props in constructor function.
+super() will call the constructor of its parent class. It is required if we need to access some variables of parent class.
+
+#Example of super in JS
+#without super()
+class A {
+  constructor() {
+    this.a = 'hello'
+  }
+}
+
+class B extends A {
+  constructor(){
+    console.log(this.a) //throws an error
+  }
+}
+
+console.log(new B())
+It gives error
+
+#with super 
+class A {
+  constructor(props) {
+    this.props = props
+  }
+}
+
+class B extends A {
+  constructor(props) {
+    super(props)
+    console.log(this.props)
+  }
+}
+
+console.log(new B({title: 'hello world'}))
+
+In React super is used to call constructor of parent class.
+
+class Main extends React.Component {
+  constructor(props) {
+    super();
+  }
+
+  render() {
+    return <Children />;
+  }
+}
+
+render(<Main />, document.getElementById("root"));
+
+import React from "react";
+import { render } from "react-dom";
+
+export default class Children extends React.Component {
+  constructor(props) {
+    super();
+    this.state = { name: "Test" };
+  }
+
+  render() {
+    return <h2>{this.state.name}</h2>;
+  }
+}
+
+We can see that class extends React.Component. A component that extends React.Component must call super() in constructor 
+because it is a derived class and it need to access this context inside the derived class constructor.
+
+
+7. (Research) Why can't we have callback function of useEffect async whereach we can make componentDidMount async?
+It is because aysnc functions implicitly return a promise. Promise object represent completion or failure of asynchronous operation.
+Promise is in pending, fulfilled or rejected state. Promise lets asynchronous function to return values like synchronous methods:
+instead of immediately returning the final value, asynchronous method returns promise to supply the value at some point in future.
+
+But useEffect expects its callback to return nothing or 
+a cleanup function. Also, React's useEffect hook expects a cleanup function returned from it. Using async function will cause 
+bug as cleanup function will never get called. So, we can use immediate function expression or named function that we can invoke.
+
+
+#ComponentDidUpdate
+This method is invoked after update occurs. It is not called on initial render. It is also good place to do network requests
+as we compare current props with previous props (network request might not be necessary if the props have not changed)
+
+componentDidUpdate(prevProps) {
+  // Typical usage (don't forget to compare props):
+  if (this.props.userID !== prevProps.userID) {
+    this.fetchData(this.props.userID);
+  }
+}
+We can call setState immediately but we need to be wrapped in a condition else infinite loop condition occurs.
+
+
+# Additional
+
+- static getDerivedStateFromError()
+ It is invoked after error is thrown by descendant component.
+
+ - compoentDidCatch()
+ It is invoked after error thrown by descendant component.

@@ -1,0 +1,179 @@
+# Chapter 08 - Class Based Components
+
+1. When React started, the concept of class based components started recently. React initially started with class based components.
+There was nothing like functional components. There was no concept of hooks. It used to be very painful to write code but it used 
+used to be magical to write code because most of the developers coming from era of jQuery. The reconciliation was not that effective but 
+it was magical at that time. Components we write used to be same but only the code to write class based components was different.
+
+In class based components, code was not clean and was messy. Class based components used to be more code than functional.
+Class based components are no longer used for new project. We can do almost everything using functional components. 
+There are companies which wrote code  using class based components. 
+2. For nested route, we will use children in children. The path in those children will use relative path. We need not give a "/" 
+else it will consider a route. Slash (/) means from the root. Outlet should be created in parent.
+3. A class based component at the end of day is normal JS class. We have to tell React that it is not a normal JS class but 
+a React Component class so we write extends React.Component. 
+4. Most important part of class based component is render method. We cannot create class based component without render method.
+This is only mandatory method for class based component. This render method return some JSX unlike functional component.
+5. In class based components, we access props with this.props. When react is tracking our component, it will take props and attach to this of the class 
+instance. React will collect props and attach it to class.
+6. In functional component, we create state variable using useState providing it default value. Writing set variable in useState hook 
+is not mandatory. In class components, we have a constrcutor. That is class is a constructor. Constructor takes in props. And we have to 
+write super(props). Constructor is a place used for initialization. We create state variables inside constructor with this.state.
+State is updated with this.setState. This setState will modify partial object. It will modify just what is passed.
+7. In React class component lifecycle, constructor is called and then component is rendered. In class based components, 
+we have a method, componentDidMount() {}. This function will be called after render. First constructor is called, then component renders 
+and then componentDidMount() is called. We do this because we want to render with whatever possible and then call API and fill up with data.
+Best place to make an API call is componentDidMount() because it happens after component render. We need to initialize state in 
+constructor because it is initialized when class is called at first.
+8. When child component is called from parent component in component based class. Here first parent constructor is called, render parent, 
+constructor child , render child, componentDidMount of Child component and lastly componentDidMount of Parent gets executed. It 
+is because when component is called lifecycle of child is triggered and whole lifecycle of a  child component needs to be completed.
+
+If there are two children, order of called will be
+* Parent constructor
+* Parent render
+    * First Child - Constructor
+    * First Child - Render
+    * Second Child - Constructor
+    * Second Child - Render
+    // DOM updated for children
+    // COMMIT PHASE STARTS
+    * First Child - componentDidMount
+    * Second Child - componentDidMount
+* Parent - componentDidMount
+
+This is why it was confusing in class based component.
+When React renders, it does in two phases. First phase is render phase and second phase is commit phase in reconciliation process.
+Render phase includes constructor and render method. 
+Commit phase is place where React is actually modifying your DOM. Component DidMount is run after you have modified the DOM.
+
+Render phase is very fast so React batches render up for children.
+When there are two children, suppose if one child starts API call, it will delay for second child. So, render phase is batched.
+
+When API call in only child componentDidMount?
+In commit phase async componentDidMount will take some time to load data so sequence is as follows
+* Parent constructor
+* Parent render
+    * Child - Constructor
+    * Child - Render
+* DOM is updated
+* json is logged 
+* Child - componentDidMount (Because fetch API will take time.)
+* Parent - componentDidMount
+* Child component rerenders again.
+Meanwhile it is async operation so it will take sometime. In meantime, parent component console will be printed in console and 
+lastly child component will get into effect.
+This rerender cycle is known as updating.
+
+9.
+ComponentDidMount will be called after first render.
+Once component rerenders, componentDidUpdate() gets executed. It means it will be executed after every component re-render.
+10. When component is unloaded or destroyed, componentWillUnmount is called. We can check it by navigating it to another page.
+11. Never ever compare react lifecycle methods to React functional component. useEffect is not using componentDidMount in background.
+12. To imitate something like in useState hook, to rerender on every state variable change in class based, we used something like
+componentDidUpdate(prevProps, prevState) {
+    if this.state.count !== prevState.count || 
+    this.state.count2 !== prevState.count2 {
+        //code 
+    }
+}
+13. This keyword is shared with all the methods of class.
+
+# Notes during watching recordings
+
+1. React started with class based components. There was no hooks, functional components but it was great because many developers
+come from the era of jQuery. Later it was figured out that, class based components used to be big and messy. In today's date,
+React is very easy. In new project, we won't write class based components.
+
+2. At the end of day class component is normal JS class. We have to tell that this is not normal class but class based component.
+We cannot create class based component without render method. This is the only mandatory. The render method returns some JSX. Whatever 
+we return from render method, gets injected into the DOM.
+
+3. We access props in class based components using this.props. setVariable in useState hook of functional component is not mandatory
+during initialization. We can create same state in class based component through constructor. We have to pass props to constructor.
+Constructor is a place used for initialization so it is best place to create state. Whenever we load class, constructor is the first to 
+get called. We can access state variables by this.state. In class based components all state variables are created as part of one 
+object unlike functional components. React uses one way object. To update state variables in class based components, we use this.setState.
+We donot mutate state directly. We never to this.state = SOMETHING. Unlike state variables in function based components, we donot 
+use separate set functions to update state. The same function this.setState({}) updates all the state variables that we pass.
+
+4. In class based components, first of all constructor is called and then render is called.
+
+5. useEffect is called after render in functional components. It is used to call API. It is used to make webpages faster.
+In class based component also, we have to use similar kind of technique. We have to render component and then make an API call.
+We have componentDidMount method, this will be called after render of component. constructor, componentDidMount, etc are known as lifecycle
+methods. The sequence is first of all constructor is called, then component is rendered. After that componentDidMount is called.
+So, the best place to make an api call is componentDidMount. There are four lifecycle methods.
+
+If there is one child of parent then the sequence of being called is as follows:
+- Parent constructor
+- Parent Render
+- Child constructor
+- Child Render 
+- Child componentDidMount // all lifecycle methods of child are completed before parent.
+- Parent componentDidMount
+
+If there are multiple childs of parent then, the sequence will be
+- Parent constructor
+- Parent Render
+    - First Child Constructor
+    - First Child Render
+    - Second Child Constructor
+    - Second Child Render
+    DOM UPDATED FOR CHILDREN
+    - First Child ComponentDidMount
+    - Second Child ComponentDidMount
+- Parent componentDidMount
+
+When React is rendering, it does in two phases: render and commit phase
+React first of all finishes render phase (constructor and render)
+Commit phase is place where React is actually modifying your DOM. First of all React updates the DOM and then componentDidMount 
+is called.
+When there are two children, discrepancies seen. When there are two children or multiple children, React batches the render phase as 
+render phase is fast but commit phase is slow. Suppose one child had API call, then one children would obstruct the rendering of 
+other child components.
+
+When API is called in child component the order is as follows:
+
+- Parent constructor
+- Parent Render
+- Child constructor
+- Child Render 
+- Parent componentDidMount - Because react finishes render and goes to commit phase. In commit phase, the since the async componentDidMount
+of child takes some time so parent componendDidMount is executed.
+- json is logged in console
+- Child componentDidMount // all lifecycle methods of child are completed before parent.
+
+When API is called, the component is re-rendered. The rerendered cycle is known as updating.
+
+In child component, 
+- Child Constructor
+- Child Render 
+- childComponentDidMount
+- API call
+- set State
+- component re-render
+- componentDidUpdate
+
+ComponentDidMount - called after first render
+ComponentDidUpdate - after every subsequent render
+
+ComponentWillUnmount - When component unmounts. Suppose when nagivated to another page.
+Never compare react lifecycle method to functional components like useEffect is similar to componentDidMount. They are not 
+equivalent. useEffect doesnot use componentDidMount at back.
+
+When in useEffect, we pass dependency array with state variables, if we want to do same thing in componentDidUpdate, we had to pass
+prevProps or prevState and write logic inside it.
+
+If we want to use different logic for each state variable changed, we can use multiple useEffect.
+
+6. componentWillUnmount - It is called when we leave page. We use it to cleanup. React is Single Page Application. Since it is single page, 
+we need to clear when changing page. It is explained using setInterval in ProfileClass component. 
+When we are changing page, it is not reloading, only the components are changed.
+setInterval when used will be there even if we navigate to another page. It will eventually hamper performance. We have to clear 
+interval in componentWillUnmount.
+
+7. Creating a setInterval in useEffect only will not clear when we navigate. In functional components, we clean up using 
+return function in useEffect. This return function will be return when navigating.
+
+
