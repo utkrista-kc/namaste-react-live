@@ -6,11 +6,11 @@ const Profile = (props) => {
   useEffect(() => {
     // API Call
     // console.log("useEffect")
-    const timer = setInterval(() => {
-      console.log("Namaste React OP");
-    }, 1000);
+    // const timer = setInterval(() => {
+    //   console.log("Namaste React OP");
+    // }, 1000);
     return () => {
-      clearInterval(timer);
+      // clearInterval(timer);
       console.log("useEffect return");
     };
   }, []);

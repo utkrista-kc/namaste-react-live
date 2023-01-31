@@ -32,7 +32,7 @@ class Profile extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.state.count !== prevState.count) {
     }
-    console.log("Component Did Update");
+    console.log("Component Did Update ");
   }
 
   componentWillUnmount() {

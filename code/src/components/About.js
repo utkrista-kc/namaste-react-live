@@ -36,7 +36,8 @@ class About extends Component {
         </p>
         <ProfileFunctionalComponent name={"Utkrista"} />
         <Profile name={"Child"} xyz={"ABC"} />
-        {/* <Profile name={"Second Child"} xyz={"ABC"} /> */}
+        {/* <Profile name={"Second Child"} xyz={"ABC"} />
+        <Profile name={"Third Child"} xyz={"ABC"} /> */}
       </div>
     );
   }
