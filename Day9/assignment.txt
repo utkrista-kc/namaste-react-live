@@ -1,0 +1,176 @@
+Chapter 09- Optimizing Our App
+
+1. When and why do we need lazy()?
+Bundling is process of following imports and merging them to a single file. The bundle can be used to laod the entire app 
+at once. Code splitting is feature supported by bundlers which allows us to lazy load only the things needed by user and eventually
+improving performance of application.
+
+Best way to introduce code splitting is throught dynamic import syntax.
+Before: 
+import { add } from './math';
+console.log(add(16, 26));
+
+After:
+import("./math").then(math => {
+    console.log(math.add(16,26));
+})
+When webpack comes, it automatically starts code splitting your application.
+
+React.lazy is a function that lets us render a dynamic import as regular component.
+
+Before: 
+import OtherComponent from './OtherComponent';
+
+After: 
+const OtherComponent = React.lazy(() => import('./OtherComponent'));
+This will load the bundle containing other component when this component is rendered.
+React.lazy takes a function that calls a dynamic import. This must contain a promise which resolves to a module with 
+default export containing React component.
+React.lazy currently supports default exports. If the module you want to import uses named export then we can create an intermediate
+ module that reexports it as default value.
+
+lazy takes load as parameter. load is a function that returns a promise. But this will not be called until user attempt to render the 
+returned component. After react calls load, it will wait for it to be resolved. Both the promise and resolved value will be cached so 
+React will not call load more than once. If promise rejects, react will throw rejection reason to let the Error Boundary above it to handle.
+load receives no paramter.
+
+ lazy- lets you defer loading component's code until it is rendered for the first time. lazy returns a react component that we can render in the tree. 
+ While the code for lazy is being prepared, attempting to render it will suspend. So, we can display <Suspense> with loading indicator 
+ while it's loading.
+
+ Donot declare lazy components inside other components.
+
+
+2. What is suspense?
+Suspense is not a data fetching implementation. It is a mechanism for data fetching libraries to tell react that the data a 
+component is reading is not ready yet. React then can wait and update the UI later.
+The lazy component should be rendered inside Suspense component which allows us to show some fallback content while we wait for 
+the lazy component to load. The fallback prop accepts any kind of React element. We can place suspense component on top of 
+any React lazy component. We can also wrap multiple lazy components with single suspense component.
+
+<Suspense> allow us to display a fallback until its children have finished loading. fallback is alternative UI that you intend to 
+display instead of actual UI if it has not finished loading. Suspense will automatically switch to fallback when the children 
+suspends and back to children when data is ready. If the fallback suspends while rendering, it will activate the closest parent 
+Suspense boundary.
+
+3. Why we got this error: A component suspended while responding to synchronous input. This will cause the UI to be replaced with a 
+loading indicator. To fix, updates that suspend should be wrapped with startTransition? How does suspense fix this error?
+We got this error because, we dynamically loaded a component. When this process happens, when the component is getting being loaded, 
+React tries to render the component giving this error. We can solve this by wrapping up with <Suspense> component which lets 
+react know that the component is dynamically loaded and prevent it from suspension. Not just that, for the waiting time when the component 
+is loaded, we can pass a falback props to suspense component which allows us to display a alternative UI until the dynamic 
+component is loaded. 
+
+
+4. Advantages and disadvantages of using this code splitting pattern?
+Time to Interactive(TTI): It is a value that specifies the total time required for a website to aload all assets needed for a website 
+to initialize and become interactive to user.
+
+Advantages:
+- While the total amount of code is same, the amount of code needed in initial render is reduced optmizing the performance.
+- Offers physical separation of the different part of the application, being able to decide when the browser should load them.
+- Drastic reduction of time to download data and parse to make app interactive i.e. reduction in TTI.
+- Client side caching improved by updating only those parts of application that has changed.
+
+Disadvantages:
+- Code splitting requires downloading of data after the page initializes. If there is no internet connection, there is no way 
+to load additional modules. We have to prepare some message to the user. We have to introduce loading indicators or develop 
+some strategies for efficient loading.
+- We need to write additional logic to load modules when required.
+- Slight delay in loading the code chunk for the first time.
+- We can only use it in client side rendering.
+
+
+5. When do we and why do we need suspense?
+Suspense is react component that is used to wrap up other components that might make asynchronous requests or any time the 
+child component peforms some action in the loading state. In previous years of release, suspense was only used for code splitting 
+with React.lazy and it was not supported rendering it in server. 
+
+In React 18, support for Suspense on server and expansion in its capabilities using concurrent rendering features is done.
+Suspense in React 18 works beest when combined with transition API. If you suspend during transition, React will prevent already 
+visible content from being replaced by fallback. Instead, React will delay the render.
+
+We need to use suspense for lazy loading components to prevent dynamic loading of components resulting into error when they are loaded 
+for the first time.
+
+
+# Additional 
+
+1. Any component that is already rendered might suspend, so even those components have to go through fallback UI. In order 
+to have consistent screen, if already shown component suspends, React has to hide its tree upto closest <Suspense> boundary.
+Suppose we are on photos tab and we try to move to comments tab. During this, instead of showing a loading screen, we want UI 
+with loaded photo tab and update it when the comments are loaded. For this type of experience, we can use statTransition API.
+By this, we can tell React that it is not an urgent update but it is a transition that may take time.
+
+Transitions are new concurrent features introduced in React. They allow us to mark updates as transitions and avoid going back 
+to suspense fallbacks for already visible content. We can use startTransition and mark navigation state update as transition.
+
+function Router() {
+  const [page, setPage] = useState('/');
+
+  function navigate(url) {
+    startTransition(() => {
+      setPage(url);      
+    });
+  }
+This tells react that it is not an urgent update. It is better to show already revealed content. Transition doesnot wait for 
+all content to load. It only waits long enought to avoid hiding already revealing conent. We can also use some indications to let 
+the user know that transition is happening.
+
+2. Error boundaries:
+If module fails, we can handle such error to show nice user experience and manage recovery with Error Boundary. Once we have 
+creaed Error Boundary we can use it anywhere above lazy component to display an error state when there is network error.
+
+import React, { Suspense } from 'react';
+import MyErrorBoundary from './MyErrorBoundary';
+
+const OtherComponent = React.lazy(() => import('./OtherComponent'));
+const AnotherComponent = React.lazy(() => import('./AnotherComponent'));
+
+const MyComponent = () => (
+  <div>
+    <MyErrorBoundary>
+      <Suspense fallback={<div>Loading...</div>}>
+        <section>
+          <OtherComponent />
+          <AnotherComponent />
+        </section>
+      </Suspense>
+    </MyErrorBoundary>
+  </div>
+);
+
+Error boundaries are react component that catch JS errors anywhere in the child component tree, log those errors and 
+display a fallback UI instead of component tree that crashed. 
+Error boundaries donot catch erros for: 
+event handlers, asynchronous code, server side rendering and errors thrown in error boundary itself.
+
+We cannot use try/catch because it works for imperative code whereas React components are declarative and specify what should be 
+rendered. Error boundaries preserve declarative nature of React and behave as you would expect.
+
+3. Route based code splitting 
+Deciding where in the app to introduce code splitting might be tricky but a good place to start is with routes.
+
+4. React.memo lets us skip re-rendering a component when its props are unchanged. This method only exists as a performance 
+optimization.
+
+5. Hooks are new addition in React 16.8. They let us write state and other features without using class. Using own hooks 
+let us write component logic into reusable functions. Traditionally in React, there were two ways to share stateful logic :
+render props(it is technique for sharing code between react components using a prop whose value is a function) and higher order components(is function that takes a component and return new component)
+
+When we want to share logic between two JS functions, we extract it to third function. So, components and hooks are functions 
+so it works for them too. A custom hook is a JS function whose name starts with "use" and may call other hooks.
+
+Do two components using same hook share state?
+No, custom hooks are a mechanism to reuse stateful logic. But everytime you use it, all the state and effects inside it are completely isolated.
+
+
+How does custom hook get isolated state?
+Each call to a hook gets an isolated state. We know that we can call useState and useEffect many times in one component and they will 
+be completely independent. The same way works for custom hooks.
+
+We can pass information between hooks.
+Using hooks to untangle a messay component and hid ecomplex logic in simple interface is recommended.
+
+useReducer hook is an alternative to useState. useReducer is preferred when we have complex logic that involves multiple sub values 
+or when the next state depends on previous one.

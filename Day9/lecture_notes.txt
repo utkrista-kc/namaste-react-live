@@ -1,0 +1,64 @@
+Chapter 09 - Optimizing Our App
+
+1. When, how and why to build custom hooks?
+Hooks are at the end normal JS functions.
+For reusability, readability, separation of concern, maintainability
+JS function- we can wrap up a logic inside function and reuse it anywhere we want to for readability, modularity and reusable.
+Whenever we are creating reusable functions, there should be common place to keep our utility functions and import from there.
+A great way is to make a folder utils. We can give whatever names we want to. It makes our code readable and reusable.
+This also makes our code more testable. It is because we can write separate test cases for our helper function. It is maintainable because
+it is easy to debug. Our code is modular means that we have broken down our code into meaningful pieces. 
+
+Hooks are also used for the same reasons. Always create a hook with use name infront of it.
+We use hooks to export logic into some function.
+
+2. Bundling is good to a limit. We have to make logical bundles of our app.
+
+When you are loading component in demand, React tries to suspend the operation.
+Upon On Demand Loading -> Upon render -> suspend loading(because code is not there)
+Never dynamically load your component inside another component.
+
+# Recorded lecture notes
+3. Hooks at the end of the day are normal JS functions. We build functions in JS so we can wrap up small logic in function and 
+use it anywhere in the code. We do it for modularity, readability and reusability. For reusable functions, a great way to do is 
+to use common utility folder. It also makes our code testable because we can write separate test logics for this function. 
+We say it is maintainable because it is easy to debug. If in bugs, we easily know that reusable logic will be placed in util 
+function. So, it is easier. Modularity means we have broken down our code into meaningful pieces. Every component has its 
+smaller responsibility. Hooks are also used for same reasons.
+
+For example, RestaurantMenu component is doing two jobs. It is fetching data from server and displaying data. We can extract some logic from 
+this component. We can extract API call and create a hook that will fetch restaurant data. Whenever we create hook, better to 
+create new file and create with use word in it.
+If the file is single and we are creating single hook, better to export by default.
+We use hook to export logic into that function. Functional components are functions that return jsx. Hooks need not return jsx 
+but it is piece of JS code that extracts some logic out of it.
+
+4. We will be building a custom hook showing if the user is connected to internet or not.
+Why don't we create normal function instead of hook? We cannot create state variables in normal functions. React will not trigger 
+reconciliation for normal functions. Normal functions will not have access to useEffect.
+In JS, to know whether user is online or offline we can use 
+  window.addEventListener("online", () => {
+    
+  })
+We have to set our event listener just once whenever our page loads. 
+Whenever we add event listener, we have to clean up our event listener when navigating to another component. It is good practice. 
+Hooks are removed during unmounting phase.
+We can create many custom hooks such as create custom hook.
+5. In large application, the bundler size also becomes big. Loading everything at once makes our site slow. It doesnot make sense to 
+put all our components in one bundle. Large applications cannot be created by one bundle. We hve to use chunking or code splitting or 
+dynamic bundling or lazy loading or on demand loading or dynamic imports.
+6. Bundling is good if we use logical bundles. Even though it is one line, it makes difference as it optimizes our production 
+ready app to next level. In large scale application, we build bundles based on use cases.
+7. We do dynamic import or lazy loading in place where we have imported that component. We have to do dynamic import there.
+We do it using lazy - named import of react library. lazy() takes a function and import with path to file.
+8. When we use lazy(), we got error first time. It is because, the component takes some time to load but meanwhile React tries to 
+render it. When we are loading component in demand, react tries to suspend it. 
+Upon on demand loading - upon render - react suspend loading.
+To handle this case, we use something known as Suspense. We import it as named import from react library.  So, we wrap the 
+component inside <Suspense>.Suspense takes fallback so we can show anything in meantime component is loaded.
+
+9. Chunking is not necessary for small applications.
+
+10. Never ever dynamically load component inside component. If done, it will be lazy loaded after every render cycle.
+
+
