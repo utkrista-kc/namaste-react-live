@@ -5,7 +5,7 @@ import useOnline from "../utils/useOnline";
 
 const Title = () => (
   <a href="/">
-    <img className="logo" src={Logo} alt="logo" />
+    <img className="h-24 p-2" src={Logo} alt="logo" />
   </a>
 );
 
@@ -13,32 +13,41 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const isOnline = useOnline();
   return (
-    <div className="header">
+    <div className="flex justify-between bg-white-50 shadow-lg">
       {<Title />}
-
-      <div className="nav-items">
-        <ul>
+      <div className="nav-items flex mr-32 pr-8">
+        <ul className="flex  py-10">
           <Link to="/">
-            <li>Home</li>
+            <li className="px-4">Home</li>
           </Link>
           <Link to="/about">
-            <li>About</li>
+            <li className="px-4">About</li>
           </Link>
           <Link to="/contact">
-            <li>Contact</li>
+            <li className="px-4">Contact</li>
           </Link>
-          <li>Cart</li>
+          <li className="px-4">Cart</li>
           <Link to="/instamart">
-            <li>Instamart</li>
+            <li className="px-4">Instamart</li>
           </Link>
         </ul>
+        <h2 className="py-10 px-4">{isOnline ? "✅" : "🔴"}</h2>
+        {isLoggedIn ? (
+          <button
+            className="p-3 pb-8 my-8 h-8 bg-purple-500 text-white  rounded-md  hover:bg-violet-600"
+            onClick={() => setIsLoggedIn(false)}
+          >
+            Logout
+          </button>
+        ) : (
+          <button
+            className="p-2 px-3 pb-8 my-8 h-8 bg-purple-500 text-white  rounded-md  hover:bg-violet-600"
+            onClick={() => setIsLoggedIn(true)}
+          >
+            Login
+          </button>
+        )}
       </div>
-      <h2>{isOnline ? "✅" : "🔴"}</h2>
-      {isLoggedIn ? (
-        <button onClick={() => setIsLoggedIn(false)}>Logout</button>
-      ) : (
-        <button onClick={() => setIsLoggedIn(true)}>Login</button>
-      )}
     </div>
   );
 };

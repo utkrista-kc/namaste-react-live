@@ -30,11 +30,11 @@ class About extends Component {
     console.log("Parent - render");
     return (
       <div>
-        <h1>About Us Page</h1>
-        <p>
+        <h1 className="font-bold text-xl m-4">About Us Page</h1>
+        <p className="m-4">
           This is the Namaste React Live Course Chapter 07 - Finding the path{" "}
         </p>
-        <ProfileFunctionalComponent name={"Utkrista"} />
+        {/* <ProfileFunctionalComponent name={"Utkrista"} /> */}
         <Profile name={"Child"} xyz={"ABC"} />
         {/* <Profile name={"Second Child"} xyz={"ABC"} />
         <Profile name={"Third Child"} xyz={"ABC"} /> */}

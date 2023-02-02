@@ -14,18 +14,24 @@ const RestaurantMenu = () => {
   return !restaurant ? (
     <Shimmer />
   ) : (
-    <div className="menu">
+    <div className="flex m-8">
       <div>
-        <h1>Restaurant id: {resId}</h1>
-        <h2>{restaurant?.name}</h2>
-        <img src={IMG_CDN_URL + restaurant.cloudinaryImageId} />
-        <h3>{restaurant?.area}</h3>
-        <h3>{restaurant?.city}</h3>
-        <h3>{restaurant?.avgRating}</h3>
-        <h3>{restaurant?.costForTwoMsg}</h3>
+        <h1 className="font-bold text-xl">Restaurant id: {resId}</h1>
+        <h2 className="font-bold py-4  text-xl">{restaurant?.name}</h2>
+        <img
+          className="shadow-md w-96"
+          src={IMG_CDN_URL + restaurant.cloudinaryImageId}
+        />
+        <h3 className="my-2">{restaurant?.area}</h3>
+        <h3 className="my-2">{restaurant?.city}</h3>
+        <h3 className="my-2">{restaurant?.avgRating}</h3>
+        <h3 className="my-2">{restaurant?.costForTwoMsg}</h3>
       </div>
-      <div>
-        <h1>Menu</h1>
+      <div
+        className="mx-12
+      "
+      >
+        <h1 className="font-bold text-xl">Menu</h1>
         <ul>
           {Object.values(restaurant?.menu?.items).map((item) => (
             <li key={item.id}>{item.name}</li>

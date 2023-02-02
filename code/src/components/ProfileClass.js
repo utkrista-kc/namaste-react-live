@@ -45,12 +45,17 @@ class Profile extends React.Component {
     const { count } = this.state;
     return (
       <div>
-        <h1>Profile Class Component</h1>
-        <img src={this.state?.userInfo?.avatar_url} alt="" />
-        <h2>Name: {this.state?.userInfo?.name}</h2>
-        <h2>Location: {this.state?.userInfo?.location}</h2>
-        <h2>Count: {count}</h2>
+        <h1 className="font-bold text-xl m-4">Profile Class Component</h1>
+        <img
+          className="w-40 m-4"
+          src={this.state?.userInfo?.avatar_url}
+          alt=""
+        />
+        <h2 className="m-4">Name: {this.state?.userInfo?.name}</h2>
+        <h2 className="m-4">Location: {this.state?.userInfo?.location}</h2>
+        <h2 className="m-4">Count: {count}</h2>
         <button
+          className="m-4 p-2 bg-purple-500 text-white rounded-md hover:bg-violet-600"
           onClick={() => {
             // WE DONOT MUTATE STATE DIRECTLY
             // NEVER DO this.state = something
