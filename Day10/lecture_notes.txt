@@ -1,0 +1,133 @@
+CHAPTER 10 - Jo dikhta hai vo bikta hai
+
+How to make web apps look good? How to write CSS in web projects.
+We cover most trending CSS framework, tailwind CSS
+1. The primary reason for choosing CSS framework is to write optimized CSS and it also saves time.
+2. If we write the basic CSS there are so many time, there are so many things that are tedious. So, scss and sass writing faster.
+When we use scss it is modern way of writing css. At the end of day, scss is converted to  basic CSS. Just like JSX, it is JS at the 
+end of the day. 
+One way to use CSS in code is :
+a) Normal .css file
+b) Sass or scss
+c) Inline CSS - It is written using style providing it with JS object. It is not a good way of writing CSS because we cannot reuse these. It is 
+also a heavy job for browsers to process inline CSS. It is better to write css in single file rather than using inline CSS.
+d) Using libraries like material UI, base UI, ant design, chakra UI, bootstrap etc
+Material UI is fully loaded component library. It means components are already styled. It is also newer and faster way to build UI.
+Every framework is neither good not worse. Each library gives similar feature with some differences.
+We can use as many libraries of UI in our project but we donot want inconsistencies in UI in our application. We need to have
+uniformity when it comes to design.
+
+Pros of using libraries:
+- reusable
+- easy to use
+- saves a lot of time
+- gives automatic theming
+- consistent UI
+
+Cons of using libraries:
+- Bundle size heavy
+- We loose a lot of control on how my design looks. A personal customization becomes hard.
+
+Styled-components is also popular way to use css in projects. It comes with learning curve and learning style. It is a different way of writing code.
+
+3. Tailwind CSS is an open source CSS framework. It comes up with mix of things.
+- Writing CSS on the go(in the same file)
+- Reusability (It comes with lot of prebuilt classes that we can use)
+- Less bundle size (as it is minimal CSS that it offers to us)
+- Flexible UI (Customize it however we want to which was a con of using libraries such as material UI)
+- Less code
+- No duplicate CSS
+- Faster development as we donot need to switch between files.
+
+Cons 
+- High learning curve
+- Makes class name look ugly as it compromises 
+
+When we use tailwind css, it changes default behaviour of many tags. We have to write it in tailwind style to make it work.
+Every style that you write will be new class name inside tailwind css. Everything in tailwind works with class names.
+
+Stick to native tailwind classes because tailwind understand it and tailwind doesnot create a class for every dynamic classes.
+
+# React about scss and sass
+
+# Who maintains material UI
+
+# Read about postcss
+
+# Lecture Recordings Notes
+
+1. The primary reason for using css framework is to write optimized css and it also saves time. It is faster in development.
+2. Writing CSS ways
+a) Maintain normal .css file
+b) Write using scss  or sass (advantage superpower, reusability, it is transformed later to css)
+c) Inline CSS - writing css in the html tags itself. In react we can use style keyword that takes JS object. It is faster process but 
+it is not a good way of writing CSS. It doesnot support reusability, difficult to maintain.
+d) Use libraries or component libraries like Material UI, base UI, ant design, Chakra UI, bootstrap and any more.
+Material UI is fully loaded component library. A lot of companies heavily rely on libraries of CSS. 
+
+Pros of using libraries:
+- Easy to use and code
+- Reusability (as a frontend developer instead of writing css we need to focus on logic)
+- Built in components
+- Consistent UI (Youtube changed all buttons to rounded)
+- Takes care of your responsiveness
+- Consistent coding when lot of developers work in same project
+
+None of them is better or none of them is worse. It depends on our usability and preference. We can do same things with all 
+kinds of libraries. We can use more than two libraries in our CSS project but it is not a good way as we donot get consistent UI.
+
+Cons of using libraries
+- It makes bundle size heavy
+- We loose control over how our design looks. Personal customization becomes hard. It restrics you with something.
+
+3. Styled components is also majorly used in React projects. It's idea is to include css inside js file. Pain of using styled 
+components, it comes with a learning curve and learning style. It is a different way of writing code. 
+
+4. Tailwind CSS framework
+
+It is open source css framework.
+It comes with mix of things. 
+- CSS on the go(writing CSS in the same file) : benefit of inline CSS
+- Reusability : comes with lot of prebuilt classes that we can use 
+- Less bundle size : it is not a full fledged framework, it has lesser bundle size as it offers minimal css
+- Flexible UI (Customizable which is major con of material UI and other libraries)
+Tailwind CSS has good documentation. It works with everything.
+When we use Tailwind CSS, it changes default behaviour of lot of tags. So, we have to write in Tailwind style. 
+Every style will be new class name in tailwind css.
+Every style you put in there is class name involved to it.
+
+5. Postcss is a tool for transforming css with javascript. We need to tail parcel that we are using tailwind and it needs another 
+compilation for it to be read by browser.
+
+6. In tailwind config file, inside config, we have to explicitly tell what files use tailwind classes.
+
+7. Our index.css will not contain any styling in tailwind except 3 @tailwind configuration.
+@tailwind base, @tailwind components, @tailwind utilities
+It is basically to tell that to use css classess from base library or components library or so on.
+
+8. If we want in Css to have exactly same value then we have square bracket notation where we can give values in square bracket. 
+Example: w-[200px]
+
+Tailwind css ensure that only the classes that are used in code will be only shipped to production reducing the bundle size.
+
+Better to stick to native tailwind classes rather than dynamic classes.
+Debugging is faster as we can just go to the component and make changes to css directly. We donot need to switch files and donot need 
+to remember class name of css.
+
+Even if we are using same classnames for different elements, it is not creating multiple classes. Only the same class will be reused.
+
+For media queries and responsive, we can use sm, md etc to give css for different sizes.
+
+9. 
+Pros of tailwind: 
+- Easy to debug
+- Less code 
+- No duplicate css
+- Bundle size is small
+- Time is faster
+- More control than other libraries
+- We can customize as it is newer way of writing css
+
+Cons of tailwind:
+- There is initial high learning curve associated so new developers need some time to get productive.
+- When we add css classes, the component class name becomes messy and ugly. It compromises readability a little.
