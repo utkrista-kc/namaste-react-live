@@ -1,0 +1,72 @@
+CHAPTER 11 - Data is the new oil
+
+1. UI in React is managed by state and props. But there are more things that manage.
+State is local variable.
+If we need to pass data from one component to another, we use props. 
+Props are kind of local state for parent.
+If we want to pass props from parent to lowest level children, it is called props drilling.
+Props passed in parent child hierarchy is known as props drilling.
+
+What if we had to pass data from child to parent component? 
+It is because data flow is one way. It flows from parent to child. There are very less cases when we need data from children to parent.
+We can build our custom hooks. But building things is also not good viable way.
+Using local storage is also not that viable.
+
+In props drilling, there can be component that dono use props but it has to pass down to anothr. If you have a hierarchy of 
+two to three levels, it is okay to pass data from props. But it makes our code cluttered.
+
+
+# Recorded lecture
+1. When we are developing web application, handling data is the most important part. UI layer is everything you see on browser. 
+Data layer and UI layer combines for web application in SPA. UI layer is powered by data layer. UI is managed with state and props.
+But there are more things to managing UI layer not just state and props. If we want a variable whose scope is within that component, 
+it is known as state. It is local variable. Prop is value/data passed from one component to another. Props are local state to a 
+parent.
+
+2. If we want to pass data from parent to lowest level of children in hierarchy, one option is to pass the props through each child 
+until the end child receives it. The intermediate children might or mightnot use the props received. This way of passing props 
+from parent to lowest level of children is called props drilling.
+Chrome extension react developers tool will help in debugging data layer. Data layer powers the UI.
+Props from parent to child to child to child .. is known as props drilling.
+Suppose we have data in parent and we want data in grand grand child, we are drilling all components to pass the props. 
+
+3. Data flows one way from parent to child. To pass data from children to parent, there are very less cases where parent needs children 
+data. 
+One way is we can use local storage, but not a good way. 
+We can build our custom hooks, but building hooks for these things is not a good way.
+
+4. Props drilling is not a good way. Because some component might not even require that data. It can make our code cluttered. If 
+we have to pass data to 2-3 levels, it might be okay to use props drilling but to pass props in more higher level of data, it 
+is not good way. One way to solve this is redux. One more disadvantage of using props drilling is that when we pass props 
+to all these components, it re-renders all these components.
+
+5. If we built accordian, suppose if there are multiple components, and if we have show hide button for description like instamart. In this case, if we show one 
+component, and while if we open another component description, another accordian which is open should close. The components Section in Instamart doesnot share state.
+These sections donot share state among them. Each section have individual section. We cannot modify state of another sibling from a component. Instead of each 
+section maintaining state, parent should do it. Now we will take control of show hide of section to parent. This concept is known as lifting the state up.
+
+6. Suppose we want user logged in info, to any other children component or anywhere, we can use props drilling but that is bad 
+approach. So, we have to store it in a central space so that every component can access it. One option can be local storage 
+but local storage is not that reliable as it is inside browser. Also updating local storage is heavy or costly operation.
+React gives access to this central space known as React Context. Some also use Redux store to handle this. It is like a shared state and 
+any component can use that data all across the application. There are many libraries similar to React Context but React has made its own.
+We can even make a global variable but in that case react is not tracking the variable and no reconciliation happening.
+
+7. createContext at the end of the day is a function. It takes in some data that you need across all application.
+We can use createContext to create the context and useContext to use that. useContext at the end of the day is a hook.
+Yes, we can have multiple contexts in our application. It is like a constant file and we can use it anywhere. It is not tied to component. 
+But state variables(useState()) are tied to component.
+
+State and props are tied to components. We use contexts as central store if data is needed all across our application. We 
+donot create context for all.
+
+8. Class component donot have hook. So in class components, so we use context imported as a component. We can do 
+<ContextName.Consumer>- It will take a jsx that will have function having value of context.
+
+9. We can also modify context data from where we want to modify data such as API call using <ContextName.Provider value={}> In our
+UserContext.Provider we can override default value of context. We can also modify context for smaller portion of application.
+
+10. We can also give names to context by providing contextname.displayName = "".
+
+11. Context is powerful,it even updates values of components that are even loaded. It is because of the Data layer. It is not tied 
+component. 

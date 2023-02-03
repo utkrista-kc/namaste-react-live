@@ -1,0 +1,124 @@
+Chapter 11 - Data is the new oil
+
+1. What is prop drilling?
+Props are data that we can pass or access from top level components to any number of child components in our application.
+Props drilling also known as threading is a concept that you pass data from parent to child but with many intermediate 
+child who own the props just to pass down the chain. Props drilling is a situatioin where data is passed from one component 
+throught many interdependent components until you get to the component where data is needed. Passing data through multiple 
+components is not a good way of writing clean and reusable code. React Context API is fast way to avoid props drilling and 
+ensuring that data is managed globally.
+
+2. What is lifting the state up?
+In React sharing state is achieve by moving it to the closest common ancestor of the components that need it. This is called 
+lifting state up. There should be single source of truth for any data that changes in React application.
+
+3. What is Context Provider and Context Consumer?
+
+Context provides a way to pass data through the component tree instead of manually passing props at every level. There might be situations 
+that some data is needed by many components in the application. In that case, context provides a way to share data between 
+components without explicitly having to pass a prop through every component. Context is used to share data that is considered 
+global for a tree of React components such as theme, authenticated user, language preference. One another alternative if you want 
+to avoid using Context, component composition can be simpler solution. It might be called as inversion of control as it makes 
+our code cleaner by reducing amount of props. But it is not the right choice. It adds more complexity.
+
+React.createContext: 
+const MyContext = React.createContext(defaultValue);
+It creates a context object. When react renders component that subscribes to this context object, it will read current context 
+value from its closest matching Provider above it in the tree. The default value is used only when the component doesnot 
+have matching Provider above it in the tree. This default value can be helpful for testing components in the isolation without 
+wrapping them. Passing undefined as a provider value doesnot cause consuming components to use default value.
+
+
+Context.Provider: 
+<MyContext.Provider value = {/*some value */} >
+Every context object comes with a react provider component that allows consuming components to subscribe to context changes.
+It accepts a value prop to pass it to descendant consumers. One provider can be connected to many consumers. Providers can be 
+nested to write value deeper within the tree. All the consumers that are descendants of provider will re-render if the 
+value prop changes. Changes are determined using same algorithm.
+
+Class.ContextType: 
+The contextType property can be used with class to assign a context object created by React.createContext(). Using this, 
+we can consume the nearset value of context type using this.context. We can access this.context in lifecycle methods including 
+render function.
+MyClass.contextType = MyContext;
+
+If we are using public class field syntax, we can use static contextType and use it.
+class MyClass extends React.Component {
+  static contextType = MyContext;
+  render() {
+    let value = this.context;
+    /* render something based on the value */
+  }
+}
+
+
+Context.Consumer: 
+<MyContext.Consumer>
+{value => /* render based on value */}
+</MyContext.Consumer>
+
+It is React component that subscribes to context changes. It requires a function as a child. This function receives current 
+context value. The value will be equal to closest value prop passed in Provider. If there exist no such Provider, default 
+value that was used in creating Context will be used.
+
+Context.displayName: 
+Context object accepts displayName string property. React Dev Tools uses this string to determine what to display name for context.
+const MyContext = React.createContext(/* some value */);
+MyContext.displayName = 'MyDisplayName';
+
+Caveats: 
+Context uses referential identiy to determine when to re-render so there can be unintentional re-render in consumer's when 
+provider's parent re-renders.
+
+In JS, identity operator reutrns true if operands are equal else false without type conversion.
+//identity or strict equality 
+x==y
+
+Identity describes the property of objects that distinguishes from other objects. Reference identity is to use object reference 
+as identity. The refernce points to object's location in memory. Reference identity is memory address equality i.e. two variables point to 
+same content or not. So, identity reference refers to a reference that points to same object in memory. The equality operator '==' 
+compares the value of two variables, whereash the identity operator '===' compares both values and type of variables. If the two variables 
+have same value and type, they are considered identical and refer to same object in memory.
+ In JS, when we compare non-primitive values such as literal, objects, arrays, functions and so on, 
+
+ const a = {}
+const b = {}
+
+console.log(a === b)
+It will return false because equality checks on non-primitive values check identities and not the contents of those objects.
+
+
+class App extends React.Component {
+  render() {
+    return (
+      <MyContext.Provider value={{something: 'something'}}>
+        <Toolbar />
+      </MyContext.Provider>
+    );
+  }
+}
+
+To get around this, lift the value into the parent’s state:
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: {something: 'something'},
+    };
+  }
+
+  render() {
+    return (
+      <MyContext.Provider value={this.state.value}>
+        <Toolbar />
+      </MyContext.Provider>
+    );
+  }
+}
+
+4. If you don't pass a value to the provider does it take the default value?
+No, we get error if we donot pass value with provider. If we donot pass anything, the argument will be undefined and 
+default value will not be used.
+
+
